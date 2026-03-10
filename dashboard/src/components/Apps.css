@@ -1,0 +1,41 @@
+.apps-container {
+  padding: 30px;
+  background-color: #f5f7fb;
+  min-height: 100vh;
+}
+
+.apps-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.app-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.app-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.app-card p {
+  font-size: 14px;
+  color: #666;
+}
+
+.app-card:hover {
+  transform: translateY(-5px);
+}
