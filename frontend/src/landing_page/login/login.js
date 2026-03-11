@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -93,7 +95,15 @@ const Login = () => {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-
+          <div className="text-center mt-3">
+            Don't have an account?{" "}
+            <span
+              style={{ color: "blue", cursor: "pointer", textDecoration: "none" }}
+              onClick={() => navigate("/signup")}
+            >
+              Signup
+            </span>
+          </div>
         </form>
       </div>
     </div>

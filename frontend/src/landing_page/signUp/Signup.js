@@ -59,24 +59,6 @@ const Signup = () => {
       <div className="card signup-card shadow-lg p-4">
         <h3 className="text-center mb-4 fw-bold">Create Account</h3>
 
-        {message && (
-          <div className="alert alert-info py-2">
-            {message === "User already exists" ? (
-            <>
-                User already exists.{" "}
-                <span
-                style={{ color: "blue", cursor: "pointer", textDecoration: "underline" }}
-                onClick={() => navigate("/login")}
-                >
-                Click here to Login
-                </span>
-            </>
-            ) : (
-            message
-            )}
-          </div>
-        )}
-
         <form onSubmit={handleSubmit}>
 
           <div className="mb-3">
@@ -122,7 +104,15 @@ const Signup = () => {
           >
             {loading ? "Creating..." : "Sign Up"}
           </button>
-
+          <div className="text-center mt-3">
+            Already have an account?{" "}
+            <span
+              style={{ color: "blue", cursor: "pointer", textDecoration: "underline" }}
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </span>
+          </div>
         </form>
       </div>
     </div>
