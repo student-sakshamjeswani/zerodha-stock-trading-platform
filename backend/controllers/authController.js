@@ -83,7 +83,12 @@ module.exports.getUser = async (req, res) => {
   }
 };
 
-module.exports.Logout =async(req,res)=>{
-  res.clearCookie("token"); 
-  return res.json({ status: true, message: "Logged out successfully" });
+module.exports.Logout = async (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,       // JS se access nahi hoga → security
+    secure: true,         // HTTPS required
+    sameSite: "none",     // cross-site requests ke liye
+    path: "/",            // cookie path clear karna
+  });
+  return res.status(200).json({ status: true, message: "Logged out successfully" });
 };

@@ -21,7 +21,9 @@ const Account = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("https://zerodha-stock-trading-platform-qb0o.onrender.com/logout", {}, { withCredentials: true });
+      await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/logout", {
+          withCredentials: true
+      });
       window.location.href = "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
     } catch (error) {
       console.log("Logout failed", error);
