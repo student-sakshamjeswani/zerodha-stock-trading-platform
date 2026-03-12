@@ -1,8 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react"; 
 import { Link } from "react-router-dom";
-
 import axios from "axios";
-
 import GeneralContext from "./GeneralContext";
 
 import "./BuyActionWindow.css";
@@ -11,35 +9,42 @@ const BuyActionWindow = ({ uid, mode }) => {
   const [stockQty, setStockQty] = useState(1);
   const [stockPrice, setStockPrice] = useState(0.0);
   const [holdings, setHoldings] = useState([]);
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
   const generalContext = useContext(GeneralContext);
 
-  const handleBuyClick = async () =>{
-    await axios.post("https://zerodha-stock-trading-platform-qb0o.onrender.com/newOrder", 
-      {
-        name: uid,
-        qty: stockQty,
-        price: stockPrice,
-        mode: mode,
-      },
-      {
-        withCredentials: true   // 👈 ye add karo
-      }
-    );
-
-    generalContext.closeBuyWindow();
-  }
-
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", {
-      withCredentials: true
-    }).then((res) => {
-      setHoldings(res.data);
-    });
+    // Check if user logged in
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { withCredentials: true })
+      .then(res => {
+        if (res.data.status !== false) setUserAuthenticated(true);
+      })
+      .catch(() => setUserAuthenticated(false));
+
+    // Fetch holdings
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", { withCredentials: true })
+      .then(res => setHoldings(res.data));
   }, []);
 
-  const handleCancelClick = () => {
-    generalContext.closeBuyWindow();
+  const handleBuyClick = async () => {
+    if (!userAuthenticated) {
+      alert("Please log in to place orders.");
+      return;
+    }
+
+    try {
+      await axios.post(
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/newOrder",
+        { name: uid, qty: stockQty, price: stockPrice, mode },
+        { withCredentials: true }
+      );
+      generalContext.closeBuyWindow();
+    } catch (err) {
+      console.log(err);
+      alert("Order failed. Please try again.");
+    }
   };
+
+  const handleCancelClick = () => generalContext.closeBuyWindow();
 
   const hasHolding = holdings.some(h => h.name === uid && h.qty > 0);
 

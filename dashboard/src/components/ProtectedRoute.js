@@ -6,21 +6,28 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     axios
-      .get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { withCredentials: true })
-      .then(() => {
-        setIsAuth(true); // user logged in
+      .get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
+        withCredentials: true,
+      })
+      .then(res => {
+        if (res.data.status === false) {
+          setIsAuth(false);
+          window.location.href =
+            "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
+        } else {
+          setIsAuth(true);
+        }
       })
       .catch(() => {
-        setIsAuth(false); // user not logged in
-        window.location.href = "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
+        setIsAuth(false);
+        window.location.href =
+          "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
       });
   }, []);
 
-  if (isAuth === null) {
-    return <h3>Loading...</h3>;
-  }
+  if (isAuth === null) return <h3>Loading...</h3>;
 
-  return children;
+  return isAuth ? children : null;
 };
 
 export default ProtectedRoute;

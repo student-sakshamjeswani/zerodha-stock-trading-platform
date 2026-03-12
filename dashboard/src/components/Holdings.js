@@ -4,38 +4,33 @@ import { VericalGraph } from "./VerticalGraph";
 
 const Holdings = () => {
   const [allHoldings, setAllHoldings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setAllHoldings(res.data);
-      });
+    // check login
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { withCredentials: true })
+      .then(res => { if(res.data.status !== false) setUserAuthenticated(true); })
+      .catch(() => setUserAuthenticated(false));
+
+    // fetch holdings
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", { withCredentials: true })
+      .then(res => setAllHoldings(res.data))
+      .finally(() => setLoading(false));
   }, []);
 
-  if (allHoldings.length === 0) {
-    return (
-      <div className="orders">
-        <div className="no-orders">
-          <p>You don't have any holdings</p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <p>Loading holdings...</p>;
+  if (!userAuthenticated) return <p>Please log in to view holdings.</p>;
+  if (allHoldings.length === 0) return <p>You don't have any holdings.</p>;
 
-  const labels = allHoldings.map((stock) => stock.name);
-
+  const labels = allHoldings.map(stock => stock.name);
   const data = {
     labels,
-    datasets: [
-      {
-        label: "Stock price",
-        data: allHoldings.map((stock) => stock.price),
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
+    datasets: [{
+      label: "Stock price",
+      data: allHoldings.map(stock => stock.price),
+      backgroundColor: "rgba(255, 99, 132, 0.5)",
+    }],
   };
 
   return (
@@ -55,9 +50,8 @@ const Holdings = () => {
               <th>Day chg.</th>
             </tr>
           </thead>
-
           <tbody>
-            {allHoldings?.map((stock) => {
+            {allHoldings.map(stock => {
               const currValue = stock.price * stock.qty;
               const isProfit = currValue - stock.avg * stock.qty >= 0;
               const profClass = isProfit ? "profit" : "loss";
@@ -70,9 +64,7 @@ const Holdings = () => {
                   <td>{Number(stock.avg).toFixed(2)}</td>
                   <td>{Number(stock.price).toFixed(2)}</td>
                   <td>{currValue.toFixed(2)}</td>
-                  <td className={profClass}>
-                    {(currValue - stock.avg * stock.qty).toFixed(2)}
-                  </td>
+                  <td className={profClass}>{(currValue - stock.avg * stock.qty).toFixed(2)}</td>
                   <td className={profClass}>{stock.net}</td>
                   <td className={dayClass}>{stock.day}</td>
                 </tr>
@@ -80,27 +72,6 @@ const Holdings = () => {
             })}
           </tbody>
         </table>
-      </div>
-
-      <div className="row">
-        <div className="col">
-          <h5>
-            29,875.<span>55</span>
-          </h5>
-          <p>Total investment</p>
-        </div>
-
-        <div className="col">
-          <h5>
-            31,428.<span>95</span>
-          </h5>
-          <p>Current value</p>
-        </div>
-
-        <div className="col">
-          <h5>1,553.40 (+5.20%)</h5>
-          <p>P&L</p>
-        </div>
       </div>
 
       <VericalGraph data={data} />
