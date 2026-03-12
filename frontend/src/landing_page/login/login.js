@@ -27,7 +27,7 @@ const Login = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:3002/login",
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/login",
         formData,
         { withCredentials: true }
       );
@@ -36,7 +36,7 @@ const Login = () => {
       window.dispatchEvent(new Event("userLogin"));
 
       // Login success
-      window.location.href = "http://localhost:3001";
+      window.location.href = "https://zerodha-stock-trading-platform-2-r26t.onrender.com";
 
     } catch (error) {
 

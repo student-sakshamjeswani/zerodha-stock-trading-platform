@@ -4,15 +4,14 @@ import { Link } from "react-router-dom";
 
 const Menu = () => {
   const [selectedMenu, setSelectedmenu] = useState(0);
-  const [isProfileDropDownOpen, setIsProfileDropDownOpen] = useState(false);
   const [username, setUsername] = useState("User");
   const [email, setEmail] = useState("");
 
   // Fetch user info from backend
   const fetchUser = async () => {
     try {
-      const res = await axios.get("http://localhost:3002/me", {
-        withCredentials: true, // important to send JWT cookie
+      const res = await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
+        withCredentials: true,
       });
       setUsername(res.data.username || "User");
       setEmail(res.data.email || "");
@@ -24,10 +23,9 @@ const Menu = () => {
   };
 
   useEffect(() => {
-    fetchUser(); // fetch when Menu mounts
+    fetchUser();
   }, []);
 
-  // Optional: refetch after login/signup
   useEffect(() => {
     const handleLoginEvent = () => fetchUser();
     window.addEventListener("userLogin", handleLoginEvent);
@@ -35,23 +33,6 @@ const Menu = () => {
   }, []);
 
   const handleMenuClick = (index) => setSelectedmenu(index);
-  const handleProfileClick = () =>
-    setIsProfileDropDownOpen(!isProfileDropDownOpen);
-
-  const handleLogout = async () => {
-    try {
-      await axios.post(
-        "http://localhost:3002/logout",
-        {},
-        { withCredentials: true },
-      );
-      setUsername("User");
-      setEmail("");
-      window.location.href = "http://localhost:3000/login"; // redirect
-    } catch (err) {
-      console.log("Logout error:", err);
-    }
-  };
 
   const menuClass = "menu";
   const activemenuClass = "menu selected";
@@ -60,104 +41,93 @@ const Menu = () => {
   return (
     <div className="menu-container">
       <img src="logo.png" style={{ width: "50px" }} />
+
       <div className="menus">
         <ul>
-          {" "}
           <li>
-            {" "}
             <Link
               style={{ textDecoration: "none" }}
               to="/"
               onClick={() => handleMenuClick(0)}
             >
-              {" "}
               <p className={selectedMenu === 0 ? activemenuClass : menuClass}>
                 Dashboard
-              </p>{" "}
-            </Link>{" "}
-          </li>{" "}
+              </p>
+            </Link>
+          </li>
+
           <li>
-            {" "}
             <Link
               style={{ textDecoration: "none" }}
               to="/orders"
               onClick={() => handleMenuClick(1)}
             >
-              {" "}
               <p className={selectedMenu === 1 ? activemenuClass : menuClass}>
                 Orders
-              </p>{" "}
-            </Link>{" "}
-          </li>{" "}
+              </p>
+            </Link>
+          </li>
+
           <li>
-            {" "}
             <Link
               style={{ textDecoration: "none" }}
               to="/holdings"
               onClick={() => handleMenuClick(2)}
             >
-              {" "}
               <p className={selectedMenu === 2 ? activemenuClass : menuClass}>
                 Holdings
-              </p>{" "}
-            </Link>{" "}
-          </li>{" "}
+              </p>
+            </Link>
+          </li>
+
           <li>
-            {" "}
             <Link
               style={{ textDecoration: "none" }}
               to="/positions"
               onClick={() => handleMenuClick(3)}
             >
-              {" "}
               <p className={selectedMenu === 3 ? activemenuClass : menuClass}>
                 Positions
-              </p>{" "}
-            </Link>{" "}
-          </li>{" "}
+              </p>
+            </Link>
+          </li>
+
           <li>
-            {" "}
             <Link
               style={{ textDecoration: "none" }}
               to="/funds"
               onClick={() => handleMenuClick(4)}
             >
-              {" "}
               <p className={selectedMenu === 4 ? activemenuClass : menuClass}>
                 Funds
-              </p>{" "}
-            </Link>{" "}
-          </li>{" "}
+              </p>
+            </Link>
+          </li>
+
           <li>
-            {" "}
             <Link
               style={{ textDecoration: "none" }}
               to="/apps"
               onClick={() => handleMenuClick(5)}
             >
-              {" "}
               <p className={selectedMenu === 5 ? activemenuClass : menuClass}>
                 Apps
-              </p>{" "}
-            </Link>{" "}
-          </li>{" "}
-        </ul>
-        <hr />
-        <div className="profile" onClick={handleProfileClick}>
-          <div className="avatar">{avatarLetter}</div>
-          <p className="username">{username}</p>
+              </p>
+            </Link>
+          </li>
 
-          {isProfileDropDownOpen && (
-            <div className="profile-dropdown">
-              <p className="dropdown-username">{username}</p>
-              {email && <p className="dropdown-email">{email}</p>}
-              <hr />
-              <button className="logout-btn" onClick={handleLogout}>
-                Logout
-              </button>
-            </div>
-          )}
-        </div>
+          {/* Profile Section */}
+          <li>
+            <Link style={{ textDecoration: "none" }} to="/accounts">
+              <div className="profile">
+                <div className="avatar">{avatarLetter}</div>
+                <p className="username">{username}</p>
+              </div>
+            </Link>
+          </li>
+        </ul>
+
+        <hr />
       </div>
     </div>
   );

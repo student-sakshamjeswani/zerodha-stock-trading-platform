@@ -14,7 +14,7 @@ const BuyActionWindow = ({ uid, mode }) => {
   const generalContext = useContext(GeneralContext);
 
   const handleBuyClick = async () =>{
-    await axios.post("http://localhost:3002/newOrder", 
+    await axios.post("https://zerodha-stock-trading-platform-qb0o.onrender.com/newOrder", 
       {
         name: uid,
         qty: stockQty,
@@ -30,7 +30,7 @@ const BuyActionWindow = ({ uid, mode }) => {
   }
 
   useEffect(() => {
-    axios.get("http://localhost:3002/allHoldings", {
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", {
       withCredentials: true
     }).then((res) => {
       setHoldings(res.data);

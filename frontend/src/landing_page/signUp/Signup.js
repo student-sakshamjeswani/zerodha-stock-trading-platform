@@ -28,7 +28,7 @@ const Signup = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:3002/signup",
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/signup",
         {
           ...formData,
           createdAt: new Date()
@@ -40,7 +40,7 @@ const Signup = () => {
 
       if (res.data.success) {
         window.dispatchEvent(new Event("userLogin"));
-        window.location.href = "http://localhost:3001";   // 👈 YAHAN redirect hoga
+        window.location.href = "https://zerodha-stock-trading-platform-2-r26t.onrender.com";   // 👈 YAHAN redirect hoga
       }
 
     } catch (error) {
@@ -107,7 +107,7 @@ const Signup = () => {
           <div className="text-center mt-3">
             Already have an account?{" "}
             <span
-              style={{ color: "blue", cursor: "pointer", textDecoration: "underline" }}
+              style={{ color: "blue", cursor: "pointer", textDecoration: "none" }}
               onClick={() => navigate("/login")}
             >
               Login
