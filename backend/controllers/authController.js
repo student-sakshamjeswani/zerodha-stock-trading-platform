@@ -52,13 +52,6 @@ module.exports.Login = async (req, res) => {
 
     const token = createSecretToken(user._id);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true, 
-      sameSite: "none",
-      maxAge: 3 * 24 * 60 * 60 * 1000
-    });
-
     res.json({
       success: true,
       token,
@@ -84,11 +77,8 @@ module.exports.getUser = async (req, res) => {
 };
 
 module.exports.Logout = async (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: true,       // JS se access nahi hoga → security
-    secure: true,         // HTTPS required
-    sameSite: "none",     // cross-site requests ke liye
-    path: "/",            // cookie path clear karna
+  return res.status(200).json({
+    status: true,
+    message: "Logged out successfully"
   });
-  return res.status(200).json({ status: true, message: "Logged out successfully" });
 };

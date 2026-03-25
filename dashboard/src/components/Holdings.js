@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "./api";
 import { VericalGraph } from "./VerticalGraph";
 
 const Holdings = () => {
@@ -8,29 +8,42 @@ const Holdings = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    // check login
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { withCredentials: true })
-      .then(res => { if(res.data.status !== false) setUserAuthenticated(true); })
-      .catch(() => setUserAuthenticated(false));
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUserAuthenticated(false);
+      setLoading(false);
+      return;
+    }
 
-    // fetch holdings
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", { withCredentials: true })
+    setUserAuthenticated(true);
+
+    api.get("/allHoldings")
       .then(res => setAllHoldings(res.data))
+      .catch(err => {
+        console.log(err);
+        setUserAuthenticated(false);
+      })
       .finally(() => setLoading(false));
+
   }, []);
 
   if (loading) return <p>Loading holdings...</p>;
+
   if (!userAuthenticated) return <p>Please log in to view holdings.</p>;
+
   if (allHoldings.length === 0) return <p>You don't have any holdings.</p>;
 
   const labels = allHoldings.map(stock => stock.name);
+
   const data = {
     labels,
-    datasets: [{
-      label: "Stock price",
-      data: allHoldings.map(stock => stock.price),
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    }],
+    datasets: [
+      {
+        label: "Stock price",
+        data: allHoldings.map(stock => stock.price),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
   };
 
   return (
@@ -64,7 +77,9 @@ const Holdings = () => {
                   <td>{Number(stock.avg).toFixed(2)}</td>
                   <td>{Number(stock.price).toFixed(2)}</td>
                   <td>{currValue.toFixed(2)}</td>
-                  <td className={profClass}>{(currValue - stock.avg * stock.qty).toFixed(2)}</td>
+                  <td className={profClass}>
+                    {(currValue - stock.avg * stock.qty).toFixed(2)}
+                  </td>
                   <td className={profClass}>{stock.net}</td>
                   <td className={dayClass}>{stock.day}</td>
                 </tr>
@@ -73,7 +88,6 @@ const Holdings = () => {
           </tbody>
         </table>
       </div>
-
       <VericalGraph data={data} />
     </>
   );

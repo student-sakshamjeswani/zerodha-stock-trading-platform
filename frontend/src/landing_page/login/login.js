@@ -29,14 +29,15 @@ const Login = () => {
       const res = await axios.post(
         "https://zerodha-stock-trading-platform-qb0o.onrender.com/login",
         formData,
-        { withCredentials: true }
       );
 
-      // after successful login/signup
-      window.dispatchEvent(new Event("userLogin"));
-
-      // Login success
+      if (res.data.success) {
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("username", res.data.username);
       window.location.href = "https://zerodha-stock-trading-platform-2-r26t.onrender.com";
+      } else {
+        setMessage(res.data.message);
+      }
 
     } catch (error) {
 

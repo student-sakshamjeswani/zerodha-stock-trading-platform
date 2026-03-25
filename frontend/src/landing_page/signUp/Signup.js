@@ -33,15 +33,12 @@ const Signup = () => {
           ...formData,
           createdAt: new Date()
         },
-        {
-          withCredentials: true
-        }
       );
+    if (res.data.success) {
+      localStorage.setItem("token", res.data.token);
+      window.location.href = "https://zerodha-stock-trading-platform-2-r26t.onrender.com";
 
-      if (res.data.success) {
-        window.dispatchEvent(new Event("userLogin"));
-        window.location.href = "https://zerodha-stock-trading-platform-2-r26t.onrender.com";   // 👈 YAHAN redirect hoga
-      }
+    }
 
     } catch (error) {
       if(error.response?.status === 400){

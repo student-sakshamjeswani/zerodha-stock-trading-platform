@@ -1,22 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "./api";
 
 const ProtectedRoute = ({ children }) => {
   const [isAuth, setIsAuth] = useState(null);
-
   useEffect(() => {
-    axios
-      .get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
-        withCredentials: true,
-      })
-      .then(res => {
-        if (res.data.status === false) {
-          setIsAuth(false);
-          window.location.href =
-            "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
-        } else {
-          setIsAuth(true);
-        }
+    const token = localStorage.getItem("token"); 
+    if (!token) {
+      setIsAuth(false);
+      window.location.href =
+        "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
+      return;
+    }
+    api.get("/me")
+      .then(() => {
+        setIsAuth(true);
       })
       .catch(() => {
         setIsAuth(false);
@@ -24,9 +22,7 @@ const ProtectedRoute = ({ children }) => {
           "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
       });
   }, []);
-
   if (isAuth === null) return <h3>Loading...</h3>;
-
   return isAuth ? children : null;
 };
 

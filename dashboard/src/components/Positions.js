@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"; 
 import axios from 'axios';
+import api from "./api";
 
 const Positions = () => {
   const [allPositions, setAllPositions] = useState([]);
@@ -7,20 +8,22 @@ const Positions = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if user is logged in
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { withCredentials: true })
-      .then(res => {
-        if(res.data.status !== false){
-          setUserAuthenticated(true);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUserAuthenticated(false);
+      setLoading(false);
+      return;
+    }
+    setUserAuthenticated(true);
 
-          // Fetch positions only if authenticated
-          axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allPositions", { withCredentials: true })
-            .then((res) => setAllPositions(res.data))
-            .catch((err) => console.log(err));
-        }
+    api.get("/allPositions")
+      .then((res) => setAllPositions(res.data))
+      .catch((err) => {
+        console.log(err);
+        setUserAuthenticated(false);
       })
-      .catch(() => setUserAuthenticated(false))
       .finally(() => setLoading(false));
+
   }, []);
 
   const handleLoginRedirect = () => {
