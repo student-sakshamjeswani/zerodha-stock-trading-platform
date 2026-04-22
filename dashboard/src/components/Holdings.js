@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import api from "./api";
 import { VericalGraph } from "./VerticalGraph";
 
 const Holdings = () => {
@@ -8,7 +7,7 @@ const Holdings = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("/me", { withCredentials: true })
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { withCredentials: true })
       .then(res => {
         if (res.data.status !== false) {
           setUserAuthenticated(true);
