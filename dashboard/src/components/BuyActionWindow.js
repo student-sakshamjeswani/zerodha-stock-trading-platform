@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GeneralContext from "./GeneralContext";
-import api from "./api";
 
 import "./BuyActionWindow.css";
 
@@ -14,42 +13,44 @@ const BuyActionWindow = ({ uid, mode }) => {
   const generalContext = useContext(GeneralContext);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { 
+        withCredentials: true
+    })
+    .then(res => {
+      if (res.data.status !== false) setUserAuthenticated(true);
+    });
 
-    if (!token) {
-      setUserAuthenticated(false);
-      return;
-    }
-
-    setUserAuthenticated(true);
-
-    api.get("/allHoldings")
-      .then(res => setHoldings(res.data))
-      .catch(err => console.log(err));
-
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", { withCredentials: true })
+      .then(res => setHoldings(res.data));
   }, []);
 
   const handleBuyClick = async () => {
-    if (!userAuthenticated) {
-      alert("Please log in to place orders.");
-      return;
-    }
+  if (!userAuthenticated) {
+    alert("Please log in to place orders.");
+    return;
+  }
 
-    try {
-      await api.post("/newOrder", {
+  try {
+    await axios.post(
+      "https://zerodha-stock-trading-platform-qb0o.onrender.com/newOrder",
+      {
         name: uid,
         qty: stockQty,
         price: stockPrice,
         mode,
-      });
+      },
+      {
+        withCredentials: true // ✅ VERY IMPORTANT (cookie send karega)
+      }
+    );
 
-      generalContext.closeBuyWindow();
+    generalContext.closeBuyWindow();
 
-    } catch (err) {
-      console.log(err);
-      alert("Order failed. Please try again.");
-    }
-  };
+  } catch (err) {
+    console.log(err);
+    alert("Order failed. Please try again.");
+  }
+};
 
   const handleCancelClick = () => generalContext.closeBuyWindow();
 

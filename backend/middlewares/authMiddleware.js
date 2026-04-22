@@ -1,36 +1,19 @@
 const jwt = require("jsonwebtoken");
 
 const verifyUser = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-
-  // Check if header exists
-  if (!authHeader) {
-    return res.status(401).json({
-      status: false,
-      message: "No token provided"
-    });
-  }
-
-  // Format: "Bearer TOKEN"
-  const token = authHeader.split(" ")[1];
+  const token = req.cookies.token;
 
   if (!token) {
-    return res.status(401).json({
-      status: false,
-      message: "Invalid token format"
-    });
+    return res.json({ status: false, message: "No token" });
   }
 
-  try {
-    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-    req.userId = decoded.id;
+  jwt.verify(token, process.env.TOKEN_KEY, (err, data) => {
+    if (err) {
+      return res.json({ status: false, message: "Invalid token" });
+    }
+    req.userId = data.id;
     next();
-  } catch (err) {
-    return res.status(401).json({
-      status: false,
-      message: "Invalid token"
-    });
-  }
+  });
 };
 
 module.exports = verifyUser;

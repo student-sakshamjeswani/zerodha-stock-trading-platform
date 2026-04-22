@@ -32,12 +32,14 @@ const Signup = () => {
         {
           ...formData,
           createdAt: new Date()
-        },
+        }, 
+        {
+          withCredentials: true
+        }
       );
     if (res.data.success) {
-      localStorage.setItem("token", res.data.token);
+      // localStorage.setItem("token", res.data.token);
       window.location.href = "https://zerodha-stock-trading-platform-2-r26t.onrender.com";
-
     }
 
     } catch (error) {

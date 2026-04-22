@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from "react"; 
 import axios from "axios";
-import api from "./api";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setUserAuthenticated(false);
-      setLoading(false);
-      return;
-    }
-    api.get("/allOrders")
-      .then(res => setOrders(res.data))
-      .catch(err => {
-        console.log(err);
-        alert("You must log in to view orders.");
-      })
-      .finally(() => setLoading(false));
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allOrders", {
+      withCredentials: true
+    })
+    .then(res => setOrders(res.data))
+    .catch(() => alert("Login required"))
+    .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <p>Loading orders...</p>;

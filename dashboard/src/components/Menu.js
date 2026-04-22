@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import api from "./api";
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
@@ -8,16 +7,11 @@ const Menu = () => {
 
   const fetchUser = async () => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        setUsername("User");
-        return;
-      }
-      const res = await api.get("/me");
-
+      const res = await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
+        withCredentials: true
+      });
       setUsername(res.data.username || "User");
-
-    } catch (err) {
+    } catch {
       setUsername("User");
     }
   };

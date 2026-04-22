@@ -27,18 +27,18 @@ const Login = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "https://zerodha-stock-trading-platform-qb0o.onrender.com/login",
-        formData,
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/login", formData, {
+          withCredentials: true
+        }
       );
 
       if (res.data.success) {
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("username", res.data.username);
-      window.location.href = "https://zerodha-stock-trading-platform-2-r26t.onrender.com";
+        window.dispatchEvent(new Event("userLogin"));
+        window.location.href = "https://zerodha-stock-trading-platform-2-r26t.onrender.com";
       } else {
         setMessage(res.data.message);
       }
-
+      
     } catch (error) {
 
       if (error.response?.status === 401) {

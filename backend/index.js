@@ -16,9 +16,10 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: ["https://zerodha-stock-trading-platform-1-w5l7.onrender.com",
-             "https://zerodha-stock-trading-platform-2-r26t.onrender.com"
-            ],
+    origin: [
+      "https://zerodha-stock-trading-platform-1-w5l7.onrender.com",
+      "https://zerodha-stock-trading-platform-2-r26t.onrender.com"
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
