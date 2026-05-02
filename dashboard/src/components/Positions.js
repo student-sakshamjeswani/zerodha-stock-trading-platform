@@ -10,9 +10,19 @@ const Positions = () => {
     axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { withCredentials: true })
       .then(res => {
         if (res.data.status !== false) {
-          axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allPositions", { withCredentials: true })
-            .then(res => setAllPositions(res.data));
+          setUserAuthenticated(true)
+          return axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allPositions", { withCredentials: true })
         }
+        setUserAuthenticated(false)
+      })
+      .then((res) => {
+        if (res) {
+          setAllPositions(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setUserAuthenticated(false);
       })
       .finally(() => setLoading(false));
   }, []);

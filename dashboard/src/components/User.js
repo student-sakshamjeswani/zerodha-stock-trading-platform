@@ -31,7 +31,7 @@ const Account = () => {
     return (
       <div>
         <h3>You are not logged in</h3>
-        <button onClick={() => window.location.href = "/login"}>
+        <button onClick={() => window.location.href = "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login"}>
           Login
         </button>
       </div>

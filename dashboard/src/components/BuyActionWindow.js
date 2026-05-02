@@ -40,7 +40,7 @@ const BuyActionWindow = ({ uid, mode }) => {
         mode,
       },
       {
-        withCredentials: true // ✅ VERY IMPORTANT (cookie send karega)
+        withCredentials: true 
       }
     );
 

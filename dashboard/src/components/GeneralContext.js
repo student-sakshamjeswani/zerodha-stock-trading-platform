@@ -13,8 +13,12 @@ export const GeneralContextProvider = (props) => {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuth(!!token);
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { 
+        withCredentials: true
+    })
+    .then(res => {
+      if (res.data.status !== false) setIsAuth(true);
+    });
   }, []);
 
   const handleOpenBuyWindow = (uid, mode) => {

@@ -11,7 +11,6 @@ import Positions from "./Positions";
 import Summary from "./Summary";
 import WatchList from "./WatchList";
 import { GeneralContextProvider } from "./GeneralContext";
-import ProtectedRoute from "./ProtectedRoute";
 
 const Dashboard = () => {
   return (
@@ -23,65 +22,38 @@ const Dashboard = () => {
         <Routes>
           <Route
             path="/"
-            element={
-              <ProtectedRoute>
-                <Summary />
-              </ProtectedRoute>
-            }
+            element={<Summary />}
           />
 
           <Route
             path="/orders"
-            element={
-              <ProtectedRoute>
-                <Orders />
-              </ProtectedRoute>
-            }
+            element={<Orders />}
           />
 
           <Route
             path="/holdings"
-            element={
-              <ProtectedRoute>
-                <Holdings />
-              </ProtectedRoute>
-            }
+            element={<Holdings />}
           />
 
           <Route
             path="/positions"
-            element={
-              <ProtectedRoute>
-                <Positions />
-              </ProtectedRoute>
-            }
+            element={<Positions />}
           />
 
           <Route
             path="/funds"
-            element={
-              <ProtectedRoute>
-                <Funds />
-              </ProtectedRoute>
-            }
+            element={<Funds />}
           />
 
           <Route
             path="/apps"
-            element={
-              <ProtectedRoute>
-                <Apps />
-              </ProtectedRoute>
+            element={<Apps />
             }
           />
 
           <Route
             path="/accounts"
-            element={
-              <ProtectedRoute>
-                <Account />
-              </ProtectedRoute>
-            }
+            element={<Account />}
           />
         </Routes>
       </div>

@@ -7,15 +7,39 @@ const Holdings = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { withCredentials: true })
-      .then(res => {
+    axios.get(
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/me",
+        { withCredentials: true }
+      )
+      .then((res) => {
+
         if (res.data.status !== false) {
+
           setUserAuthenticated(true);
-          axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", { withCredentials: true })
-            .then(res => setAllHoldings(res.data));
+
+          return axios.get(
+            "https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings",
+            { withCredentials: true }
+          );
         }
+
+        setUserAuthenticated(false);
       })
-      .finally(() => setLoading(false));
+      .then((res) => {
+
+        if (res) {
+          setAllHoldings(res.data);
+        }
+
+      })
+      .catch((err) => {
+        console.log(err);
+        setUserAuthenticated(false);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+
   }, []);
 
   if (loading) return <p>Loading holdings...</p>;
