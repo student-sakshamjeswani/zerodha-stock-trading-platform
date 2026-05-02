@@ -7,11 +7,11 @@ const Positions = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { withCredentials: true })
+    axios.get("http://localhost:3002/me", { withCredentials: true })
       .then(res => {
         if (res.data.status !== false) {
           setUserAuthenticated(true)
-          return axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allPositions", { withCredentials: true })
+          return axios.get("http://localhost:3002/allPositions", { withCredentials: true })
         }
         setUserAuthenticated(false)
       })
@@ -28,7 +28,7 @@ const Positions = () => {
   }, []);
 
   const handleLoginRedirect = () => {
-    window.location.href = "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
+    window.location.href = "http://localhost:3000/login";
   };
 
   if (loading) return <p>Loading positions...</p>;
@@ -37,7 +37,7 @@ const Positions = () => {
     return (
       <div className="positions-container">
         <p>You need to log in to view positions.</p>
-        <button className="login-btn" onClick={handleLoginRedirect}>Log In</button>
+        <button className="login-btn" onClick={handleLoginRedirect}>Login</button>
       </div>
     );
   }

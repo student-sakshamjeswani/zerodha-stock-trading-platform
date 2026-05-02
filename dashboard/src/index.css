@@ -281,6 +281,10 @@ code {
   text-decoration: none;
 }
 
+.menus a {
+  text-decoration: none;
+}
+
 .menu {
   font-size: 0.8rem;
   font-weight: 400;

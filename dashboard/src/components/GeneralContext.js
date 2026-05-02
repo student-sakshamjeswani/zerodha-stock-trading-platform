@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import BuyActionWindow from "./BuyActionWindow";
+import axios from "axios"
 
 const GeneralContext = React.createContext({
   openBuyWindow: (uid, mode) => {},
@@ -13,7 +14,7 @@ export const GeneralContextProvider = (props) => {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { 
+    axios.get("http://localhost:3002/me", { 
         withCredentials: true
     })
     .then(res => {

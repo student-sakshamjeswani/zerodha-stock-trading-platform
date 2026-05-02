@@ -28,7 +28,7 @@ const Signup = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "https://zerodha-stock-trading-platform-qb0o.onrender.com/signup",
+        "http://localhost:3002/signup",
         {
           ...formData,
           createdAt: new Date()
@@ -38,8 +38,7 @@ const Signup = () => {
         }
       );
     if (res.data.success) {
-      // localStorage.setItem("token", res.data.token);
-      window.location.href = "https://zerodha-stock-trading-platform-2-r26t.onrender.com";
+      window.location.href = "http://localhost:3001";
     }
 
     } catch (error) {
@@ -57,6 +56,12 @@ const Signup = () => {
     <div className="signup-wrapper d-flex align-items-center justify-content-center">
       <div className="card signup-card shadow-lg p-4">
         <h3 className="text-center mb-4 fw-bold">Create Account</h3>
+
+        {message && (
+          <div className="alert alert-danger py-2">
+            {message}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
 
@@ -103,6 +108,7 @@ const Signup = () => {
           >
             {loading ? "Creating..." : "Sign Up"}
           </button>
+
           <div className="text-center mt-3">
             Already have an account?{" "}
             <span

@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GeneralContext from "./GeneralContext";
+import axios from "axios"
 
 import "./BuyActionWindow.css";
 
@@ -13,14 +14,14 @@ const BuyActionWindow = ({ uid, mode }) => {
   const generalContext = useContext(GeneralContext);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { 
+    axios.get("http://localhost:3002/me", { 
         withCredentials: true
     })
     .then(res => {
       if (res.data.status !== false) setUserAuthenticated(true);
     });
 
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", { withCredentials: true })
+    axios.get("http://localhost:3002/allHoldings", { withCredentials: true })
       .then(res => setHoldings(res.data));
   }, []);
 
@@ -32,7 +33,7 @@ const BuyActionWindow = ({ uid, mode }) => {
 
   try {
     await axios.post(
-      "https://zerodha-stock-trading-platform-qb0o.onrender.com/newOrder",
+      "http://localhost:3002/newOrder",
       {
         name: uid,
         qty: stockQty,

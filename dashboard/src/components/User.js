@@ -7,42 +7,83 @@ const Account = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
-      withCredentials: true
-    })
-    .then(res => {
-      if (res.data.status === false) setUser(null);
-      else setUser(res.data);
-    })
-    .catch(() => setUser(null))
-    .finally(() => setLoading(false));
+    axios
+      .get("http://localhost:3002/me", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.status === false) {
+          setUser(null);
+        } else {
+          setUser(res.data);
+        }
+      })
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false));
   }, []);
 
   const handleLogout = async () => {
-    await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/logout", {
-      withCredentials: true
+    await axios.get("http://localhost:3002/logout", {
+      withCredentials: true,
     });
-    window.location.href = "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
+
+    window.location.href = "http://localhost:3000/login";
   };
 
-  if (loading) return <h3>Loading...</h3>;
+  if (loading) {
+    return (
+      <div className="account-container">
+        <h3>Loading...</h3>
+      </div>
+    );
+  }
 
   if (!user) {
     return (
-      <div>
-        <h3>You are not logged in</h3>
-        <button onClick={() => window.location.href = "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login"}>
-          Login
-        </button>
+      <div className="account-container">
+        <div className="login-required">
+          <h2>You are not logged in</h2>
+
+          <p>Please login to access your account.</p>
+
+          <button
+            className="login-btn"
+            onClick={() =>
+              (window.location.href =
+                "http://localhost:3000/login")
+            }
+          >
+            Login
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div>
-      <h2>{user.username}</h2>
-      <p>{user.email}</p>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="account-container">
+      <div className="account-card">
+
+        <h2>My Account</h2>
+
+        <div className="account-field">
+          <span>USERNAME</span>
+          <p>{user.username}</p>
+        </div>
+
+        <div className="account-field">
+          <span>EMAIL</span>
+          <p>{user.email}</p>
+        </div>
+
+        <button
+          className="logout-btn"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+
+      </div>
     </div>
   );
 };

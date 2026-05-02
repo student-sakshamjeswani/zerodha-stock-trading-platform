@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios"
 
 const Menu = () => {
   const [selectedMenu, setSelectedMenu] = useState(0);
@@ -7,7 +8,7 @@ const Menu = () => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
+      const res = await axios.get("http://localhost:3002/me", {
         withCredentials: true
       });
       setUsername(res.data.username || "User");

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { VericalGraph } from "./VerticalGraph";
+import axios from "axios"
 
 const Holdings = () => {
   const [allHoldings, setAllHoldings] = useState([]);
@@ -8,7 +9,7 @@ const Holdings = () => {
 
   useEffect(() => {
     axios.get(
-        "https://zerodha-stock-trading-platform-qb0o.onrender.com/me",
+        "http://localhost:3002/me",
         { withCredentials: true }
       )
       .then((res) => {
@@ -18,7 +19,7 @@ const Holdings = () => {
           setUserAuthenticated(true);
 
           return axios.get(
-            "https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings",
+            "http://localhost:3002/allHoldings",
             { withCredentials: true }
           );
         }
@@ -44,7 +45,20 @@ const Holdings = () => {
 
   if (loading) return <p>Loading holdings...</p>;
 
-  if (!userAuthenticated) return <p>Please log in to view holdings.</p>;
+  if (!userAuthenticated) return (
+    <div>
+      <p>Please log in to view holdings.</p>
+      <button
+        onClick={() =>
+          window.location.href =
+          "http://localhost:3000/login"
+        }
+        className="login-btn"
+      >
+        Login
+      </button>
+    </div>
+  )
 
   if (allHoldings.length === 0) return <p>You don't have any holdings.</p>;
 
