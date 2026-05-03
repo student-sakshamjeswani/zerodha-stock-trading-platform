@@ -27,14 +27,14 @@ const Login = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:3002/login", formData, {
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/login", formData, {
           withCredentials: true
         }
       );
 
       if (res.data.success) {
         window.dispatchEvent(new Event("userLogin"));
-        window.location.href = "http://localhost:3001";
+        window.location.href = "https://zerodha-stock-trading-dashboard.netlify.app";
       } else {
         setMessage(res.data.message);
       }

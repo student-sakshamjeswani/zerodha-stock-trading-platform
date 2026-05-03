@@ -8,7 +8,7 @@ const Menu = () => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get("http://localhost:3002/me", {
+      const res = await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
         withCredentials: true
       });
       setUsername(res.data.username || "User");

@@ -7,7 +7,7 @@ const Orders = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:3002/allOrders", {
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allOrders", {
       withCredentials: true
     })
 
@@ -40,7 +40,7 @@ const Orders = () => {
         <button
           onClick={() =>
             window.location.href =
-            "http://localhost:3000/login"
+            "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login"
           }
           className="login-btn"
         >

@@ -9,7 +9,7 @@ const Holdings = () => {
 
   useEffect(() => {
     axios.get(
-        "http://localhost:3002/me",
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/me",
         { withCredentials: true }
       )
       .then((res) => {
@@ -19,7 +19,7 @@ const Holdings = () => {
           setUserAuthenticated(true);
 
           return axios.get(
-            "http://localhost:3002/allHoldings",
+            "https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings",
             { withCredentials: true }
           );
         }
@@ -51,7 +51,7 @@ const Holdings = () => {
       <button
         onClick={() =>
           window.location.href =
-          "http://localhost:3000/login"
+          "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login"
         }
         className="login-btn"
       >

@@ -28,7 +28,7 @@ const Signup = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "http://localhost:3002/signup",
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/signup",
         {
           ...formData,
           createdAt: new Date()
@@ -38,7 +38,7 @@ const Signup = () => {
         }
       );
     if (res.data.success) {
-      window.location.href = "http://localhost:3001";
+      window.location.href = "https://zerodha-stock-trading-dashboard.netlify.app";
     }
 
     } catch (error) {
