@@ -38,6 +38,7 @@ const Signup = () => {
         }
       );
     if (res.data.success) {
+      console.log("redirecting....")
       window.location.href = "https://zerodha-stock-trading-dashboard.netlify.app";
     }
 
