@@ -76,15 +76,15 @@ function Footer() {
                     <p>*Customers availing insurance advisory services offered by Ditto (Tacterial Consulting Private Limited | IRDAI Registered Corporate Agent (Composite) License No CA0738) will not have access to the exchange investor grievance redressal forum, SEBI SCORES/ODR, or arbitration mechanism for such products.</p>
                 </div>
                 <div className='col mt-3 mb-4 text-center'>
-                    <a href='#' className='text-muted linking'>NSE</a>
-                    <a href='#' className='text-muted linking'>BSE</a>
-                    <a href='#' className='text-muted linking'>MCX</a>
-                    <a href='#' className='text-muted linking'>Terms & conditions</a>
-                    <a href='#' className='text-muted linking'>Policies & procedures</a>
-                    <a href='#' className='text-muted linking'>Privacy policy</a>
-                    <a href='#' className='text-muted linking'>Disclosure</a>
-                    <a href='#' className='text-muted linking'>For investor's attention</a>
-                    <a href='#' className='text-muted linking'>Investor charter</a>
+                    <a href='/' className='text-muted linking'>NSE</a>
+                    <a href='/' className='text-muted linking'>BSE</a>
+                    <a href='/' className='text-muted linking'>MCX</a>
+                    <a href='/' className='text-muted linking'>Terms & conditions</a>
+                    <a href='/' className='text-muted linking'>Policies & procedures</a>
+                    <a href='/' className='text-muted linking'>Privacy policy</a>
+                    <a href='/' className='text-muted linking'>Disclosure</a>
+                    <a href='/' className='text-muted linking'>For investor's attention</a>
+                    <a href='/' className='text-muted linking'>Investor charter</a>
                 </div>
             </div>
         </footer>
