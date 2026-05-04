@@ -13,6 +13,9 @@ const authRoute = require("./routes/authRoutes");
 const PORT = process.env.PORT || 3002;
 
 const app = express();
+
+app.set("trust proxy", 1);
+
 // Middlewares
 app.use(
   cors({
