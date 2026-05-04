@@ -50,7 +50,7 @@ const Account = () => {
             className="login-btn"
             onClick={() =>
               (window.location.href =
-                "http://localhost:3000/login")
+                "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login")
             }
           >
             Login
