@@ -27,7 +27,7 @@ const Account = () => {
       withCredentials: true,
     });
 
-    window.location.href = "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login";
+    window.location.href = "https://zerodha-stock-trading-frontend.netlify.app/login";
   };
 
   if (loading) {
@@ -50,7 +50,7 @@ const Account = () => {
             className="login-btn"
             onClick={() =>
               (window.location.href =
-                "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login")
+                "https://zerodha-stock-trading-frontend.netlify.app/login")
             }
           >
             Login

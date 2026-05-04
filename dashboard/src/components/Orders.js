@@ -40,7 +40,7 @@ const Orders = () => {
         <button
           onClick={() =>
             window.location.href =
-            "https://zerodha-stock-trading-platform-1-w5l7.onrender.com/login"
+            "https://zerodha-stock-trading-frontend.netlify.app/login"
           }
           className="login-btn"
         >

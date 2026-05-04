@@ -17,7 +17,7 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://zerodha-stock-trading-platform-1-w5l7.onrender.com",
+      "https://zerodha-stock-trading-frontend.netlify.app",
       "https://zerodha-stock-trading-dashboard.netlify.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
