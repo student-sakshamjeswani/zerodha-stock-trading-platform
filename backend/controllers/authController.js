@@ -9,14 +9,25 @@ module.exports.Signup = async (req, res, next) => {
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
-    const user = await User.create({ email, password, username, createdAt });
+    
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+        email, 
+        password: hashedPassword,
+        username,
+        createdAt 
+    });
+
     const token = createSecretToken(user._id);
+
     res.cookie("token", token, {
       httpOnly: true,
       secure: true, 
       sameSite: "none",
       maxAge: 3 * 24 * 60 * 60 * 1000
     });
+
     res.status(201).json({
       success: true,
       token,
@@ -73,12 +84,22 @@ module.exports.Login = async (req, res) => {
 module.exports.getUser = async (req, res) => {
   try {
     const user = await User.findById(req.userId).select("-password");
-    res.json({
-      username: user.username,
-      email: user.email
+    if (!user) {
+      return res.status(404).json({
+        status: false,
+        message: "User not found"
+      });
+    }
+    return res.status(200).json({
+      status: true,
+      user
     });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({
+      status: false,
+      message: "Server error"
+    });
   }
 };
 
