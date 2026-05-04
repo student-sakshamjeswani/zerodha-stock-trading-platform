@@ -33,9 +33,6 @@ const Signup = () => {
           ...formData,
           createdAt: new Date()
         }, 
-        {
-          withCredentials: true
-        }
       );
     if (res.data.success) {
       console.log("redirecting....")

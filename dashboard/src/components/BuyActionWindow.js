@@ -14,14 +14,12 @@ const BuyActionWindow = ({ uid, mode }) => {
   const generalContext = useContext(GeneralContext);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", { 
-        withCredentials: true
-    })
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me")
     .then(res => {
       if (res.data.status !== false) setUserAuthenticated(true);
     });
 
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", { withCredentials: true })
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings")
       .then(res => setHoldings(res.data));
   }, []);
 
@@ -40,9 +38,6 @@ const BuyActionWindow = ({ uid, mode }) => {
         price: stockPrice,
         mode,
       },
-      {
-        withCredentials: true 
-      }
     );
 
     generalContext.closeBuyWindow();

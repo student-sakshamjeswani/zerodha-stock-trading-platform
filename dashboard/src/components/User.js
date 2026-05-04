@@ -8,9 +8,7 @@ const Account = () => {
 
   useEffect(() => {
     axios
-      .get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
-        withCredentials: true,
-      })
+      .get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me")
       .then((res) => {
         if (res.data.status === false) {
           setUser(null);
@@ -23,9 +21,7 @@ const Account = () => {
   }, []);
 
   const handleLogout = async () => {
-    await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/logout", {
-      withCredentials: true,
-    });
+    await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/logout");
 
     window.location.href = "https://zerodha-stock-trading-frontend.netlify.app/login";
   };

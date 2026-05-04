@@ -8,20 +8,14 @@ const Holdings = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get(
-        "https://zerodha-stock-trading-platform-qb0o.onrender.com/me",
-        { withCredentials: true }
-      )
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me")
       .then((res) => {
 
         if (res.data.status !== false) {
 
           setUserAuthenticated(true);
 
-          return axios.get(
-            "https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings",
-            { withCredentials: true }
-          );
+          return axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings");
         }
 
         setUserAuthenticated(false);
