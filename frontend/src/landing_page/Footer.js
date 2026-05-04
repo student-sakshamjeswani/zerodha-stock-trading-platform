@@ -17,45 +17,45 @@ function Footer() {
                     </div>
                     <div className='col mx-4'>
                         <h3 className='fs-4 mb-3 text-muted'>Account</h3>
-                        <a href='#' className='anchor text-muted'>Open demat account</a><br/>
-                        <a href='#' className='anchor text-muted'>Minor demat account</a><br/>
-                        <a href='#' className='anchor text-muted'>NRI demat account</a><br/>
-                        <a href='#' className='anchor text-muted'>Commodity</a><br/>
-                        <a href='#' className='anchor text-muted'>Dematerialisation</a><br/>
-                        <a href='#' className='anchor text-muted'>Fund transfer</a><br/>
-                        <a href='#' className='anchor text-muted'>MTF</a><br/>
-                        <a href='#' className='anchor text-muted'>Referral program</a><br/>
+                        <a href='/' className='anchor text-muted'>Open demat account</a><br/>
+                        <a href='/' className='anchor text-muted'>Minor demat account</a><br/>
+                        <a href='/' className='anchor text-muted'>NRI demat account</a><br/>
+                        <a href='/' className='anchor text-muted'>Commodity</a><br/>
+                        <a href='/' className='anchor text-muted'>Dematerialisation</a><br/>
+                        <a href='/' className='anchor text-muted'>Fund transfer</a><br/>
+                        <a href='/' className='anchor text-muted'>MTF</a><br/>
+                        <a href='/' className='anchor text-muted'>Referral program</a><br/>
                     </div>
                     <div className='col'>
                         <h3 className='fs-4 mb-3 text-muted'>Support</h3>
-                        <a href='#' className='anchor text-muted'>Contact us</a><br/>
-                        <a href='#' className='anchor text-muted'>Support portal</a><br/>
-                        <a href='#' className='anchor text-muted'>How to file a complaint?</a><br/>
-                        <a href='#' className='anchor text-muted'>Status of your complaintsy</a><br/>
-                        <a href='#' className='anchor text-muted'>Bulletin</a><br/>
-                        <a href='#' className='anchor text-muted'>Circular</a><br/>
-                        <a href='#' className='anchor text-muted'>Z-Connect blog</a><br/>
-                        <a href='#' className='anchor text-muted'>Downloads</a><br/>
+                        <a href='/' className='anchor text-muted'>Contact us</a><br/>
+                        <a href='/' className='anchor text-muted'>Support portal</a><br/>
+                        <a href='/' className='anchor text-muted'>How to file a complaint?</a><br/>
+                        <a href='/' className='anchor text-muted'>Status of your complaintsy</a><br/>
+                        <a href='/' className='anchor text-muted'>Bulletin</a><br/>
+                        <a href='/' className='anchor text-muted'>Circular</a><br/>
+                        <a href='/' className='anchor text-muted'>Z-Connect blog</a><br/>
+                        <a href='/' className='anchor text-muted'>Downloads</a><br/>
                     </div>
                     <div className='col'>
                         <h3 className='fs-4 mb-3 text-muted'>Company</h3>
-                        <a href='#' className='anchor text-muted'>About</a><br/>
-                        <a href='#' className='anchor text-muted'>Philosophy</a><br/>
-                        <a href='#' className='anchor text-muted'>Press & media</a><br/>
-                        <a href='#' className='anchor text-muted'>Careers</a><br/>
-                        <a href='#' className='anchor text-muted'>Zerodha Cares (CSR)</a><br/>
-                        <a href='#' className='anchor text-muted'>Zerodha.tech</a><br/>
-                        <a href='#' className='anchor text-muted'>Open source</a><br/>
+                        <a href='/' className='anchor text-muted'>About</a><br/>
+                        <a href='/' className='anchor text-muted'>Philosophy</a><br/>
+                        <a href='/' className='anchor text-muted'>Press & media</a><br/>
+                        <a href='/' className='anchor text-muted'>Careers</a><br/>
+                        <a href='/' className='anchor text-muted'>Zerodha Cares (CSR)</a><br/>
+                        <a href='/' className='anchor text-muted'>Zerodha.tech</a><br/>
+                        <a href='/' className='anchor text-muted'>Open source</a><br/>
                     </div>
                     <div className='col'>
                         <h3 className='fs-4 mb-3 text-muted'>Quick links</h3>
-                        <a href='#' className='anchor text-muted'>Upcoming IPOs</a><br/>
-                        <a href='#' className='anchor text-muted'>Brokerage charges</a><br/>
-                        <a href='#' className='anchor text-muted'>Market holidays</a><br/>
-                        <a href='#' className='anchor text-muted'>Economic calendar</a><br/>
-                        <a href='#' className='anchor text-muted'>Calculators</a><br/>
-                        <a href='#' className='anchor text-muted'>Markets</a><br/>
-                        <a href='#' className='anchor text-muted'>Sectors</a><br/>
+                        <a href='/' className='anchor text-muted'>Upcoming IPOs</a><br/>
+                        <a href='/' className='anchor text-muted'>Brokerage charges</a><br/>
+                        <a href='/' className='anchor text-muted'>Market holidays</a><br/>
+                        <a href='/' className='anchor text-muted'>Economic calendar</a><br/>
+                        <a href='/' className='anchor text-muted'>Calculators</a><br/>
+                        <a href='/' className='anchor text-muted'>Markets</a><br/>
+                        <a href='/' className='anchor text-muted'>Sectors</a><br/>
                     </div>
                 </div>
                 <div className='mt-5 text-muted' style={{fontSize: "12px"}}>
@@ -76,15 +76,15 @@ function Footer() {
                     <p>*Customers availing insurance advisory services offered by Ditto (Tacterial Consulting Private Limited | IRDAI Registered Corporate Agent (Composite) License No CA0738) will not have access to the exchange investor grievance redressal forum, SEBI SCORES/ODR, or arbitration mechanism for such products.</p>
                 </div>
                 <div className='col mt-3 mb-4 text-center'>
-                    <a href='#' className='text-muted linking'>NSE</a>
-                    <a href='#' className='text-muted linking'>BSE</a>
-                    <a href='#' className='text-muted linking'>MCX</a>
-                    <a href='#' className='text-muted linking'>Terms & conditions</a>
-                    <a href='#' className='text-muted linking'>Policies & procedures</a>
-                    <a href='#' className='text-muted linking'>Privacy policy</a>
-                    <a href='#' className='text-muted linking'>Disclosure</a>
-                    <a href='#' className='text-muted linking'>For investor's attention</a>
-                    <a href='#' className='text-muted linking'>Investor charter</a>
+                    <a href='/' className='text-muted linking'>NSE</a>
+                    <a href='/' className='text-muted linking'>BSE</a>
+                    <a href='/' className='text-muted linking'>MCX</a>
+                    <a href='/' className='text-muted linking'>Terms & conditions</a>
+                    <a href='/' className='text-muted linking'>Policies & procedures</a>
+                    <a href='/' className='text-muted linking'>Privacy policy</a>
+                    <a href='/' className='text-muted linking'>Disclosure</a>
+                    <a href='/' className='text-muted linking'>For investor's attention</a>
+                    <a href='/' className='text-muted linking'>Investor charter</a>
                 </div>
             </div>
         </footer>

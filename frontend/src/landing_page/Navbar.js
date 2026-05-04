@@ -28,7 +28,7 @@ function Navbar() {
                             <Link className="nav-link text-muted color-change" to="/support">Support</Link>
                             </li>
                             <li className="nav-item">
-                            <a className="nav-link ham-burger" href="#"><i class="fa-solid fa-bars"></i></a>
+                            <a className="nav-link ham-burger" href="/"><i class="fa-solid fa-bars"></i></a>
                             </li>
                         </ul>
                     </form>
