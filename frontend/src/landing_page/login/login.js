@@ -27,7 +27,7 @@ const Login = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "https://zerodha-stock-trading-platform-qb0o.onrender.com/login", formData
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/login", formData, {withCredentials: true}
       );
 
       if (res.data.success) {

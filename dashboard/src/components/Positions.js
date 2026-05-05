@@ -7,11 +7,15 @@ const Positions = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me")
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
+      withCredentials: true
+    })
       .then(res => {
         if (res.data.status !== false) {
           setUserAuthenticated(true)
-          return axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allPositions")
+          return axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allPositions", {
+            withCredentials: true
+          })
         }
         setUserAuthenticated(false)
       })

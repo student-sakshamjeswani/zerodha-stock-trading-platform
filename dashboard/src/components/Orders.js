@@ -7,7 +7,9 @@ const Orders = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allOrders")
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allOrders", {
+      withCredentials: true
+    })
 
     .then((res) => {
 

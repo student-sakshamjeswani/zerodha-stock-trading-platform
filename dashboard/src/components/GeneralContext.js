@@ -14,7 +14,9 @@ export const GeneralContextProvider = (props) => {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me")
+    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
+      withCredentials: true
+    })
     .then(res => {
       if (res.data.status !== false) setIsAuth(true);
     });
