@@ -35,8 +35,7 @@ const Signup = () => {
         }
       );
     if (res.data.success) {
-      localStorage.setItem("token", res.data.token);
-      window.location.href = "https://zerodha-stock-trading-dashboard.netlify.app";
+      window.location.href = `https://zerodha-stock-trading-dashboard.netlify.app?token=${res.data.token}`;
     }
 
     } catch (error) {
