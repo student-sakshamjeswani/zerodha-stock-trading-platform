@@ -8,33 +8,43 @@ const Holdings = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
-      withCredentials: true
-    })
-      .then((res) => {
-
-        if (res.data.status !== false) {
+    const fetchHoldings = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setUserAuthenticated(false);
+          return;
+        }
+        const userRes = await axios.get(
+          "https://zerodha-stock-trading-platform-qb0o.onrender.com/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        if (userRes.data.success) {
           setUserAuthenticated(true);
-          return axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", {
-            withCredentials: true
-          });
+          const holdingsRes = await axios.get(
+            "https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          );
+          setAllHoldings(holdingsRes.data);
+        } else {
+          setUserAuthenticated(false);
         }
-        setUserAuthenticated(false);
-      })
-      .then((res) => {
-        if (res) {
-          setAllHoldings(res.data);
-        }
-
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err);
         setUserAuthenticated(false);
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
-
+      }
+    };
+    fetchHoldings();
   }, []);
 
   if (loading) return <p>Loading holdings...</p>;

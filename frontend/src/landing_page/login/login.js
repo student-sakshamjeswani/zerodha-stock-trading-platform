@@ -27,11 +27,11 @@ const Login = () => {
       setLoading(true);
 
       const res = await axios.post(
-        "https://zerodha-stock-trading-platform-qb0o.onrender.com/login", formData, {withCredentials: true}
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/login", formData
       );
 
       if (res.data.success) {
-        window.dispatchEvent(new Event("userLogin"));
+        localStorage.setItem("token", res.data.token);
         window.location.href = "https://zerodha-stock-trading-dashboard.netlify.app";
       } else {
         setMessage(res.data.message);

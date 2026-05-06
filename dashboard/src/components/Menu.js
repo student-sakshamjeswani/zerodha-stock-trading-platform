@@ -7,21 +7,26 @@ const Menu = () => {
   const [username, setUsername] = useState("User");
 
   const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setUsername("User");
+      return;
+    }
     try {
       const res = await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
-        withCredentials: true
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
       setUsername(res.data.user.username || "User");
-    } catch {
+    } catch(err) {
+      console.log(err);
       setUsername("User");
     }
   };
 
   useEffect(() => {
     fetchUser();
-    const handleLoginEvent = () => fetchUser();
-    window.addEventListener("userLogin", handleLoginEvent);
-    return () => window.removeEventListener("userLogin", handleLoginEvent);
   }, []);
 
   const handleMenuClick = (index) => setSelectedMenu(index);

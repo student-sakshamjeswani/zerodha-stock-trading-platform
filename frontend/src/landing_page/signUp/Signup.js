@@ -32,13 +32,10 @@ const Signup = () => {
         {
           ...formData,
           createdAt: new Date()
-        }, 
-        {
-          withCredentials: true
         }
       );
     if (res.data.success) {
-      console.log("redirecting....")
+      localStorage.setItem("token", res.data.token);
       window.location.href = "https://zerodha-stock-trading-dashboard.netlify.app";
     }
 

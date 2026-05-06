@@ -5,6 +5,6 @@ const verifyUser = require("../middlewares/authMiddleware.js");
 router.post("/signup", Signup);
 router.post("/login", Login);
 router.get("/me", verifyUser, getUser);
-router.get("/logout", Logout);
+router.get("/logout", verifyUser, Logout);
 
 module.exports = router;

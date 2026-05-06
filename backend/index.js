@@ -1,9 +1,8 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const connectDB = require('./config/db');
-const cookieParser = require("cookie-parser");
+const connectDB = require("./config/db");
 
 const holdingsRoutes = require("./routes/holdingsRoutes");
 const positionsRoutes = require("./routes/positionsRoutes");
@@ -14,9 +13,6 @@ const PORT = process.env.PORT || 3002;
 
 const app = express();
 
-app.set("trust proxy", 1);
-
-// Middlewares
 app.use(
   cors({
     origin: [
@@ -24,14 +20,12 @@ app.use(
       "https://zerodha-stock-trading-dashboard.netlify.app"
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
   })
 );
 
-app.use(cookieParser());
 app.use(express.json());
 
-app.use("/", authRoute); 
+app.use("/", authRoute);
 app.use("/", holdingsRoutes);
 app.use("/", positionsRoutes);
 app.use("/", ordersRoutes);

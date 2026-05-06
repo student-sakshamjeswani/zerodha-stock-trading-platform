@@ -7,28 +7,46 @@ const Positions = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
-      withCredentials: true
-    })
-      .then(res => {
-        if (res.data.status !== false) {
-          setUserAuthenticated(true)
-          return axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allPositions", {
-            withCredentials: true
-          })
+    const fetchPositions = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setUserAuthenticated(false);
+          return;
         }
-        setUserAuthenticated(false)
-      })
-      .then((res) => {
-        if (res) {
-          setAllPositions(res.data);
+
+        // check user
+        const userRes = await axios.get(
+          "https://zerodha-stock-trading-platform-qb0o.onrender.com/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        if (userRes.data.success) {
+          setUserAuthenticated(true);
+          const positionsRes = await axios.get(
+            "https://zerodha-stock-trading-platform-qb0o.onrender.com/allPositions",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
+            }
+          );
+          setAllPositions(positionsRes.data);
+        } else {
+          setUserAuthenticated(false);
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err);
         setUserAuthenticated(false);
-      })
-      .finally(() => setLoading(false));
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPositions();
   }, []);
 
   const handleLoginRedirect = () => {

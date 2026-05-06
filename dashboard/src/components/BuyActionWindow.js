@@ -14,46 +14,72 @@ const BuyActionWindow = ({ uid, mode }) => {
   const generalContext = useContext(GeneralContext);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
-      withCredentials: true
-    })
-    .then(res => {
-      if (res.data.status !== false) setUserAuthenticated(true);
-    });
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setUserAuthenticated(false);
+          return;
+        }
+        const userRes = await axios.get(
+          "https://zerodha-stock-trading-platform-qb0o.onrender.com/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        if (userRes.data.success) {
+          setUserAuthenticated(true);
+        } else {
+          setUserAuthenticated(false);
+        }
+        // fetch holdings
+        const holdingsRes = await axios.get(
+          "https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        setHoldings(holdingsRes.data);
+      } catch (error) {
+        console.log(error);
+        setUserAuthenticated(false);
+      }
+    };
+    fetchData();
 
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allHoldings", {
-      withCredentials: true
-    })
-      .then(res => setHoldings(res.data));
   }, []);
 
   const handleBuyClick = async () => {
-  if (!userAuthenticated) {
-    alert("Please log in to place orders.");
-    return;
-  }
-
-  try {
-    await axios.post(
-      "https://zerodha-stock-trading-platform-qb0o.onrender.com/newOrder",
-      {
-        name: uid,
-        qty: stockQty,
-        price: stockPrice,
-        mode,
-      },
-      {
-        withCredentials: true
-      }
-    );
-
-    generalContext.closeBuyWindow();
-
-  } catch (err) {
-    console.log(err);
-    alert("Order failed. Please try again.");
-  }
-};
+    if (!userAuthenticated) {
+      alert("Please log in to place orders.");
+      return;
+    }
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        "https://zerodha-stock-trading-platform-qb0o.onrender.com/newOrder",
+        {
+          name: uid,
+          qty: stockQty,
+          price: stockPrice,
+          mode,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      generalContext.closeBuyWindow();
+    } catch (err) {
+      console.log(err);
+      alert("Order failed. Please try again.");
+    }
+  };
 
   const handleCancelClick = () => generalContext.closeBuyWindow();
 

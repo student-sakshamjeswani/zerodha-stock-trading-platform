@@ -1,6 +1,6 @@
 const User = require("../model/userModel");
 const { createSecretToken } = require("../util/SecretToken");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt")
 
 module.exports.Signup = async (req, res, next) => {
   try {
@@ -9,31 +9,31 @@ module.exports.Signup = async (req, res, next) => {
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const token = createSecretToken();
     
     const user = await User.create({
-        email, 
-        password,
         username,
+        email, 
+        password: hashedPassword,
+        token,
         createdAt 
     });
 
-    const token = createSecretToken(user._id);
-
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true, 
-      sameSite: "None",
-      maxAge: 3 * 24 * 60 * 60 * 1000
-    });
-
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
+      message: "Signup Successful",
       token,
       username: user.username,
       email: user.email
     });
   } catch (error) {
     console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
   }
 };
 
@@ -44,72 +44,94 @@ module.exports.Login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.json({
+      return res.status(401).json({
         success: false,
-        message: "User not found"
+        message: "Invalid email"
       });
     }
 
     const auth = await bcrypt.compare(password, user.password);
 
     if (!auth) {
-      return res.json({
+      return res.status(401).json({
         success: false,
         message: "Incorrect password"
       });
     }
 
-    const token = createSecretToken(user._id);
+    const token = createSecretToken();
+    user.token = token;
+    await user.save();
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-      maxAge: 3 * 24 * 60 * 60 * 1000
-    });
-
-    res.json({
+    return res.status(200).json({
       success: true,
+      message: "Login successful",
+      token,
       username: user.username,
       email: user.email
     });
 
   } catch (err) {
     console.log(err);
+
+     return res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
   }
 };
 
 module.exports.getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.userId).select("-password");
+    const user = await User
+      .findById(req.userId)
+      .select("-password");
     if (!user) {
       return res.status(404).json({
-        status: false,
+        success: false,
         message: "User not found"
       });
     }
     return res.status(200).json({
-      status: true,
+      success: true,
       user
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
-      status: false,
+      success: false,
       message: "Server error"
     });
   }
 };
 
 module.exports.Logout = async (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "None",
-  });
-
-  return res.status(200).json({
-    status: true,
-    message: "Logged out successfully"
-  });
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "No token"
+      });
+    }
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid token"
+      });
+    }
+    user.token = null;
+    await user.save();
+    return res.status(200).json({
+      success: true,
+      message: "Logout successful"
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+  }
 };

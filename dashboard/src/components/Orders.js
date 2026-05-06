@@ -7,26 +7,38 @@ const Orders = () => {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/allOrders", {
-      withCredentials: true
-    })
 
-    .then((res) => {
-
-      if (Array.isArray(res.data)) {
-        setOrders(res.data);
-        setUserAuthenticated(true);
-      } else {
+    const fetchOrders = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setUserAuthenticated(false);
+          return;
+        }
+        const res = await axios.get(
+          "https://zerodha-stock-trading-platform-qb0o.onrender.com/allOrders",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        if (Array.isArray(res.data)) {
+          setOrders(res.data);
+          setUserAuthenticated(true);
+        } else {
+          setUserAuthenticated(false);
+        }
+      } catch (error) {
+        console.log(error);
         setUserAuthenticated(false);
+      } finally {
+        setLoading(false);
       }
-    })
-    .catch(() => {
-      setUserAuthenticated(false);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
+    };
+    fetchOrders();
   }, []);
+
 
   if (loading) {
     return <p>Loading orders...</p>;

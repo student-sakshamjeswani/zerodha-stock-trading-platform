@@ -7,25 +7,44 @@ const Account = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
-        withCredentials: true
-      })
-      .then((res) => {
-        if (res.data.status !== false) {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setUser(null);
+          return;
+        }
+        const res = await axios.get(
+          "https://zerodha-stock-trading-platform-qb0o.onrender.com/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        if (res.data.success) {
           setUser(res.data.user);
         } else {
           setUser(null);
         }
-      })
-      .catch(() => setUser(null))
-      .finally(() => setLoading(false));
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUser();
   }, []);
 
   const handleLogout = async () => {
-    await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/logout", {
-      withCredentials: true
+    const token = localStorage.getItem("token");
+    await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/logout", {}, {
+      headers: {
+            Authorization: `Bearer ${token}`
+      }
     });
+
+    localStorage.removeItem("token");
 
     window.location.href = "https://zerodha-stock-trading-frontend.netlify.app/login";
   };

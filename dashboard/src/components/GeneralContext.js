@@ -12,14 +12,34 @@ export const GeneralContextProvider = (props) => {
   const [selectedStockUID, setSelectedStockUID] = useState("");
   const [orderMode, setOrderMode] = useState("");
   const [isAuth, setIsAuth] = useState(false);
-
+ 
   useEffect(() => {
-    axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/me", {
-      withCredentials: true
-    })
-    .then(res => {
-      if (res.data.status !== false) setIsAuth(true);
-    });
+    const checkUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setIsAuth(false);
+          return;
+        }
+        const res = await axios.get(
+          "https://zerodha-stock-trading-platform-qb0o.onrender.com/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+        if (res.data.success) {
+          setIsAuth(true);
+        } else {
+          setIsAuth(false);
+        }
+      } catch (error) {
+        console.log(error);
+        setIsAuth(false);
+      }
+    };
+    checkUser();
   }, []);
 
   const handleOpenBuyWindow = (uid, mode) => {
