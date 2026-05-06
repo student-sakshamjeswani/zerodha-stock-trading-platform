@@ -38,7 +38,7 @@ const Account = () => {
 
   const handleLogout = async () => {
     const token = localStorage.getItem("token");
-    await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/logout", {}, {
+    await axios.get("https://zerodha-stock-trading-platform-qb0o.onrender.com/logout", {
       headers: {
             Authorization: `Bearer ${token}`
       }
