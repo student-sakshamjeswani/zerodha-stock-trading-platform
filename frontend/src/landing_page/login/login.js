@@ -30,6 +30,8 @@ const Login = () => {
         "https://zerodha-stock-trading-platform-qb0o.onrender.com/login", formData
       );
 
+      console.log(res.data)
+
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         window.location.href = "https://zerodha-stock-trading-dashboard.netlify.app";
